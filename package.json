@@ -1,0 +1,11 @@
+{
+  "name": "remnexa-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "preview": "node preview.mjs"
+  },
+  "engines": {"node": ">=22"}
+}

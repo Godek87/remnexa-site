@@ -1,0 +1,17 @@
+import {mkdirSync, writeFileSync, copyFileSync} from 'node:fs';
+import {dirname, join} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {products} from './products.mjs';
+import {landing, documentation, markdown, favicon} from './templates.mjs';
+const root = dirname(fileURLToPath(import.meta.url));
+const [product] = products;
+const dist = join(root, 'dist');
+mkdirSync(dist, {recursive:true});
+writeFileSync(join(dist, 'index.html'), landing(product));
+writeFileSync(join(dist, 'docs.html'), documentation(product));
+writeFileSync(join(dist, 'product-guide.md'), markdown(product));
+writeFileSync(join(dist, 'favicon.svg'), favicon(product));
+for (const file of ['base.css','product.css','site.js','logic.mjs']) copyFileSync(join(root,'shared',file), join(dist,file));
+for (const file of ['lucide.js','LUCIDE-LICENSE']) copyFileSync(join(root,'vendor',file), join(dist,file));
+writeFileSync(join(dist, 'robots.txt'), 'User-agent: *\nDisallow:\n');
+console.log(`Built ${product.name}: dist/`);
